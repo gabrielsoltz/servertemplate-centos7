@@ -109,6 +109,10 @@ sleep 5
 echo "Seteando Localtime..." | tee -a $LOG
 sudo ln -sf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime 1>> $LOG 2>> $LOG
 sudo sed -i 's/ZONE=.*/ZONE="America\/Argentina\/Buenos_Aires"/g' /etc/sysconfig/clock 1>> $LOG 2>> $LOG
+echo "Instalar ntpdate..." | tee -a $LOG
+sudo yum -y install ntpdate 1>> $LOG 2>> $LOG
+echo "Ntpdate..." | tee -a $LOG
+sudo ntpdate pool.ntp.org  1>> $LOG 2>> $LOG
 echo "" | tee -a $LOG
 
 # HOSTNAME
