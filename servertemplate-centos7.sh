@@ -4,10 +4,10 @@
 ########################################################################################################################
 SCRIPT_NAME="SERVERTEMPLATE-CENTOS7"
 SCRIPT_DESCRIPTION="Server Template: CENTOS7"
-SCRIPT_VERSION="0.2"
+SCRIPT_VERSION="0.3"
 SCRIPT_AUTHOR="Gabriel Soltz"
 SCRIPT_CONTACT="thegaby@gmail.com"
-SCRIPT_DATE="30-03-2015"
+SCRIPT_DATE="12-10-2015"
 SCRIPT_GIT="https://github.com/gabrielsoltz/servertemplate-centos7"
 SCRIPT_WEB="www.3ops.com"
 ########################################################################################################################
@@ -101,18 +101,18 @@ sudo sed -i "s/SELINUX=.*/SELINUX=disabled/g" /etc/selinux/config 1>> $LOG 2>> $
 echo "--------------------------------------------------------" | tee -a $LOG
 echo "NTP" | tee -a $LOG 
 echo "--------------------------------------------------------" | tee -a $LOG
-echo "Eliminando NTP..." | tee -a $LOG
-sudo yum -y remove ntp 2>> $LOG && \
-echo "OK" | tee -a $LOG || \
-{ echo " ! ERROR" | tee -a $LOG ; exit; }
-sleep 5
+NTP_SERVER="ntpdate pool.ntp.org"
+echo "Instalar NTP..." | tee -a $LOG
+sudo yum -y install ntp ntpdate 2>> $LOG && \
+echo "OK" | tee -a $LOG || { echo " ! ERROR" | tee -a $LOG ; exit; }
+sudo systemctl enable ntpd  1>> $LOG 2>> $LOG
 echo "Seteando Localtime..." | tee -a $LOG
 sudo ln -sf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime 1>> $LOG 2>> $LOG
 sudo sed -i 's/ZONE=.*/ZONE="America\/Argentina\/Buenos_Aires"/g' /etc/sysconfig/clock 1>> $LOG 2>> $LOG
-echo "Instalar ntpdate..." | tee -a $LOG
-sudo yum -y install ntpdate 1>> $LOG 2>> $LOG
-echo "Ntpdate..." | tee -a $LOG
-sudo ntpdate pool.ntp.org  1>> $LOG 2>> $LOG
+echo "Seteando NTP SERVER..." | tee -a $LOG
+sudo sed -i '$a server '"$NTP_SERVER"' prefer' /etc/ntp.conf 1>> $LOG 2>> $LOG
+echo "NTPDate..." | tee -a $LOG
+sudo ntpdate $NTP_SERVER  1>> $LOG 2>> $LOG
 echo "" | tee -a $LOG
 
 # HOSTNAME

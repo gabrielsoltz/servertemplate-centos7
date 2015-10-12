@@ -11,7 +11,7 @@ Funcionalidades:
 1. UPGRADE SISTEMA
 2. ELIMINAR PAQUETES: Desintalación de Paquetes no necesarios
 3. DESACTIVAR SERVICIOS: Desactivación de Serivicios al Inicio no necesarios
-4. ZONEDATE: Eliminar Paquete NTP y Setear Zona Horaria.
+4. NTP + TIMEZONE
 5. SETEAR HOSTNAME
 6. SETEAR MOTD
 7. AJUSTES SYSCTL
