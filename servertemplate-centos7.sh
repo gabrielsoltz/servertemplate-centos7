@@ -101,7 +101,7 @@ sudo sed -i "s/SELINUX=.*/SELINUX=disabled/g" /etc/selinux/config 1>> $LOG 2>> $
 echo "--------------------------------------------------------" | tee -a $LOG
 echo "NTP" | tee -a $LOG 
 echo "--------------------------------------------------------" | tee -a $LOG
-NTP_SERVER="ntpdate pool.ntp.org"
+NTP_SERVER="pool.ntp.org"
 echo "Instalar NTP..." | tee -a $LOG
 sudo yum -y install ntp ntpdate 2>> $LOG && \
 echo "OK" | tee -a $LOG || { echo " ! ERROR" | tee -a $LOG ; exit; }
